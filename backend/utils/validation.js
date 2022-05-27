@@ -1,7 +1,10 @@
 const { validationResult } = require('express-validator');
+const asyncHandler = (handler) => (req, res, next) => handler(req, res, next).catch(next);
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
+
+
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
@@ -20,5 +23,6 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors
+  handleValidationErrors,
+  asyncHandler,
 };
