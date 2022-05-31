@@ -6,12 +6,15 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Spot from "./components/Spot"
+import * as spotsActions from "./store/spots";
+import Home from './components/Home'
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(spotsActions.getSpots())
   }, [dispatch]);
 
   return (
@@ -19,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
