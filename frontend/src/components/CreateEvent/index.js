@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import './CreateEvent.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { addSpots } from '../../store/spots';
 
 export default function CreateEvent() {
+    const history = useHistory()
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');
@@ -14,16 +15,21 @@ export default function CreateEvent() {
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
     const sessionUser = useSelector(state => state.session.user);
+    const spots = useSelector(state => state.spots)
 
     if (sessionUser?.id == undefined) return (
         <Redirect to="/" />
     );
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        dispatch(addSpots(name, city, state, image, price, description, sessionUser?.id))
+        const spot = await dispatch(addSpots(name, city, state, image, price, description, sessionUser?.id))
+        await history.push(`/spots/${spot?.id}`)
     }
+
+
     return (
         <div>
             <form onSubmit={handleSubmit} className='create-form'>
