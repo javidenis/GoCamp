@@ -1,34 +1,60 @@
 import { csrfFetch } from './csrf';
 
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const GET_SPOTS = 'spots/getSpots'
+const ADD_SPOT = 'spots/addSpot';
+const REMOVE_SPOT = 'spots/removeSpot';
 
-export const getPokemon = () => async (dispatch) => {
-    const response = await fetch(`/api/pokemon`);
-  
-    if (response.ok) {
-      const list = await response.json();
-      dispatch(load(list));
+const load = (spots) => {
+    return {
+        type: GET_SPOTS,
+        spots
     }
-  };
-  
+}
 
-const initialState = { user: null };
+export const getSpots = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots`);
+
+    if (response.ok) {
+        const spots = await response.json();
+        dispatch(load(spots));
+    }
+};
+const addSpot = (spot) => {
+    return {
+        type: ADD_SPOT,
+        payload: spot,
+    };
+};
+
+const removeSpot = () => {
+    return {
+        type: REMOVE_SPOT,
+    };
+};
+
+const initialState = { spot: null };
 
 const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case SET_USER:
-            newState = Object.assign({}, state);
-            newState.user = action.payload;
+        case GET_SPOTS:
+            newState = {};
+            action.spots.forEach((spot) => {
+                newState[spot.id] = spot;
+            });
             return newState;
-        case REMOVE_USER:
+
+        case ADD_SPOT:
             newState = Object.assign({}, state);
-            newState.user = null;
+            newState.spot = action.payload;
+            return newState;
+        case REMOVE_SPOT:
+            newState = Object.assign({}, state);
+            newState.spot = null;
             return newState;
         default:
             return state;
     }
 };
 
-export default sessionReducer;
+export default spotsReducer;

@@ -1,7 +1,10 @@
 import React from 'react'
 
-export default function Spot() {
+export default function Spot({ city, state }) {
   return (
-    <div>Spot</div>
+    <div className='spot'>
+      <div>{city}</div>
+      <div>{state}</div>
+    </div>
   )
 }
