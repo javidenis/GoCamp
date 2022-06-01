@@ -1,29 +1,36 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSpots } from '../../store/spots'
-import Spot from '../Spot'
+import './home.css'
+import { NavLink } from 'react-router-dom';
 
 export default function Spots() {
     const dispatch = useDispatch()
     const spots = useSelector(state => state.spots)
-    const allSpots = Object.values(spots)
-    console.log(allSpots, '-----------------------')
+
     useEffect(() => {
         dispatch(getSpots())
     }, [dispatch])
 
-    const currentSpot = Object.values(spots).map((el) => (
-        <li key={el?.state}>{el?.city}</li>
-      ));
-    
+    const allSpots = Object.values(spots).map((el) => (
+        <NavLink className='spot-navlink' to={`/spots/${el?.id}`}>
+            <div className='home-spots'
+                style={{ backgroundImage: `url(${el?.image})` }}
+            >
+                <div className='display'>
+                    <div key={el?.name}>{el?.name}</div>
+                    <div key={el?.price}>${el?.price}</div>
+                    <div key={el?.city}>{el?.city}</div>
+                    <div key={el?.state}>{el?.state}</div>
+                </div>
+            </div>
+        </NavLink>
+    ));
     return (
         <div>
-            {/* {allSpots.forEach(spot => (
-                <Spot key={spot} state={spot?.state} city={spot?.city} />
-            ))} */}
-            <ul>
-                {currentSpot}
-            </ul>
+            <div className='grid-container'>
+                {allSpots}
+            </div>
         </div>
     )
 }

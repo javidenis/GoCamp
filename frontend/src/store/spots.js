@@ -19,11 +19,21 @@ export const getSpots = () => async (dispatch) => {
         dispatch(load(spots));
     }
 };
+
 const addSpot = (spot) => {
     return {
         type: ADD_SPOT,
         payload: spot,
     };
+};
+
+export const addSpots = (name, city, state, image, price, description, userId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/new`, {
+        method: 'POST',
+        body: JSON.stringify({name, city, state, image, price, description, userId})
+    });
+    const info = await response.json()
+    dispatch(addSpot(info))
 };
 
 const removeSpot = () => {

@@ -14,17 +14,18 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
-      <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
+      <div className='nav-bar'>
+        <NavLink className='spreader' to="/login">Log In</NavLink>
+        <NavLink className='spreader' to="/signup">Sign Up</NavLink>
+        <NavLink className='spreader' to='/new'>Create an Event</NavLink>
+      </div>
     );
   }
 
   return (
     <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+      <li className='li-link'>
+        <NavLink className='home-link spreader' exact to="/">Home</NavLink>
         {isLoaded && sessionLinks}
       </li>
     </ul>
