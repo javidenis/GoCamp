@@ -1,0 +1,19 @@
+.nav-bar {
+    display: flex;
+}
+
+.spreader {
+    margin-right: 15px;
+}
+
+.li-link {
+    display: flex;
+}
+
+.home-link {
+    display: inline;
+}
+
+.li-link > a {
+    margin-right: 15px;
+}

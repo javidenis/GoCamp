@@ -1,0 +1,28 @@
+form {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+input,
+textarea,
+select,
+option {
+    background: none;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+    border-radius: 2px;
+    color: #fff;
+}
+
+.create-tab {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.create-form {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.description {
+    max-width: 500px;
+}

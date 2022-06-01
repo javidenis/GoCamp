@@ -6,11 +6,14 @@ const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res) => {
     const spots = await db.Spot.findAll();
+    console.log(spots)
     return res.json(spots);
 }));
 
-router.post('/', asyncHandler(async (req, res) => {
-    const spot = await db.Spot.create(req.body);
+router.post('/new', asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const {name, city, state, image, price, description, userId} = req.body
+    const spot = await db.Spot.create({name, city, state, image, price, description, userId});
     return res.json(spot);
 }));
 

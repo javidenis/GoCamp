@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Spot from "./components/Spot"
 import * as spotsActions from "./store/spots";
 import Home from './components/Home'
+import CreateEvent from './components/CreateEvent'
 
 function App() {
   const dispatch = useDispatch();
@@ -31,8 +32,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/spots">
+          <Route path="/spots/:id">
             <Spot />
+          </Route>
+          <Route path="/new">
+            <CreateEvent />
           </Route>
         </Switch>
       )}
