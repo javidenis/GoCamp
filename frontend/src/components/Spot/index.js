@@ -17,6 +17,7 @@ export default function Spot() {
 }
 
 const handleEdit = (e) => {
+  e.preventDefault();
   history.push(`/spots/${id}/edit`)
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { editSpot } from '../../store/spots';
 
 export default function CreateEvent() {
@@ -14,7 +14,7 @@ export default function CreateEvent() {
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
     const sessionUser = useSelector(state => state.session.user);
-    const spots = useSelector(state => state.spots)
+    const { id } = useParams()
 
     if (sessionUser?.id == undefined) return (
         <Redirect to="/" />
@@ -24,7 +24,7 @@ export default function CreateEvent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        const spot = await dispatch(editSpot(name, city, state, image, price, description, sessionUser?.id))
+        const spot = await dispatch(editSpot(name, city, state, image, price, description, sessionUser?.id, id))
         await history.push(`/spots/${spot?.id}`)
     }
 

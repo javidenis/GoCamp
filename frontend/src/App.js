@@ -33,13 +33,13 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/spots/:id">
+          <Route exact path="/spots/:id">
             <Spot />
           </Route>
           <Route path="/new">
             <CreateEvent />
           </Route>
-          <Route path="/spots/:id/edit">
+          <Route exact path="/spots/:id/edit">
             <EditSpot />
           </Route>
         </Switch>

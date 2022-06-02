@@ -34,20 +34,20 @@ const edit = (spot) => ({
     spot
 });
 
-export const editSpot = data => async dispatch => {
-    const response = await fetch(`/api/spots/${data.id}`, {
-        method: 'put',
+export const editSpot = (name, city, state, image, price, description, userId, id) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ name, city, state, image, price, description, userId })
     });
 
     if (response.ok) {
-        const item = await response.json();
-        await dispatch(edit(item));
+        const info = await response.json();
+        await dispatch(edit(info));
         await dispatch(getSpots())
-        return item;
+        return info;
     }
 };
 
@@ -98,10 +98,9 @@ const spotsReducer = (state = initialState, action) => {
             newState.spot = null;
             return newState;
         case EDIT_SPOT:
-            return {
-                ...state,
-                [action.spot.id]: action.spot
-            };
+            newState = { ...state };
+            newState[action.spot.id] = action.spot;
+            return newState;
         default:
             return state;
     }
