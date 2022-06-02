@@ -1,25 +1,24 @@
 const express = require('express');
 const db = require('../../db/models')
-const {asyncHandler, handleValidationErrors } = require('../../utils/validation');
+const { asyncHandler, handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res) => {
     const spots = await db.Spot.findAll();
-    console.log(spots)
     return res.json(spots);
 }));
 
 router.post('/new', asyncHandler(async (req, res) => {
-    console.log(req.body)
-    const {name, city, state, image, price, description, userId} = req.body
-    const spot = await db.Spot.create({name, city, state, image, price, description, userId});
+    const { name, city, state, image, price, description, userId } = req.body
+    const spot = await db.Spot.create({ name, city, state, image, price, description, userId });
     return res.json(spot);
 }));
 
 router.put('/:id', asyncHandler(async (req, res) => {
-    const id = await db.Spot.update(req.body);
-    const spot = await db.Spot.one(id);
+    const { name, city, state, image, price, description, userId, id } = req.body
+    const spot = await db.Spot.findByPk(req.body.id);
+    await spot.update({ name, city, state, image, price, description, userId});
     return res.json(spot);
 }));
 

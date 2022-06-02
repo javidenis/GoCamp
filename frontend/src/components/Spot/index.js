@@ -10,16 +10,22 @@ export default function Spot() {
   const spot = spots[id]
   const sessionUser = useSelector(state => state.session.user);
 
-  const handleClick = (e) => {
+  const handleDelete = (e) => {
     e.preventDefault();
     dispatch(removeSpot(id))
     history.push('/')
 }
 
+const handleEdit = (e) => {
+  e.preventDefault();
+  history.push(`/spots/${id}/edit`)
+}
+
   return (
     <div className='spot'>
       <div key={spot?.name}>{spot?.name}</div>
-      {sessionUser?.id === spot.userId && <button onClick={handleClick}>Delete Event</button>}
+      {sessionUser?.id === spot.userId && <button onClick={handleDelete}>Delete Event</button>}
+      {sessionUser?.id === spot.userId && <button onClick={handleEdit}>Edit Event</button>}
       <img src={spot?.image}/>
       <div key={spot?.price}>${spot?.price}</div>
       <div key={spot?.city}>{spot?.city}</div>

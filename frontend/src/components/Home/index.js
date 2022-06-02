@@ -14,9 +14,7 @@ export default function Spots() {
 
     const allSpots = Object.values(spots).map((el) => (
         <NavLink className='spot-navlink' to={`/spots/${el?.id}`}>
-            <div className='home-spots'
-                style={{ backgroundImage: `url(${el?.image})` }}
-            >
+            <div className='home-spots' style={{ backgroundImage: `url(${el?.image})` }}>
                 <div className='display'>
                     <div key={el?.name}>{el?.name}</div>
                     <div key={el?.price}>${el?.price}</div>
