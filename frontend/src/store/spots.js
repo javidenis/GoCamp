@@ -40,7 +40,7 @@ export const editSpot = (name, city, state, image, price, description, userId, i
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, city, state, image, price, description, userId })
+        body: JSON.stringify({ name, city, state, image, price, description, userId, id })
     });
 
     if (response.ok) {
