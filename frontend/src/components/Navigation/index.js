@@ -17,7 +17,6 @@ function Navigation({ isLoaded }){
       <div className='nav-bar'>
         <NavLink className='spreader' to="/login">Log In</NavLink>
         <NavLink className='spreader' to="/signup">Sign Up</NavLink>
-        <NavLink className='spreader' to='/new'>Create an Event</NavLink>
       </div>
     );
   }
@@ -26,6 +25,7 @@ function Navigation({ isLoaded }){
     <ul>
       <li className='li-link'>
         <NavLink className='home-link spreader' exact to="/">Home</NavLink>
+        <NavLink className='spreader' to='/new'>Create an Event</NavLink>
         {isLoaded && sessionLinks}
       </li>
     </ul>
