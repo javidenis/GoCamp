@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    color: rgb(9,233,244);
 }
 
 body {
@@ -10,5 +11,13 @@ body {
 }
 
 .errors-list {
+    color: rgb(9,233,244);
+}
+
+button {
+    border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+    background-color: rgb(15,24,36);
     color: rgb(9,233,244);
 }
