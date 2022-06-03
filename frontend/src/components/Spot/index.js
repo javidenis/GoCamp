@@ -4,6 +4,7 @@ import { removeSpot } from '../../store/spots';
 import { addReview, deleteReview, editReview, loadReviews } from '../../store/reviews';
 import { useState, useEffect } from 'react';
 import './spot.css'
+import EditReview from '../EditReview';
 
 export default function Spot() {
   const history = useHistory()
@@ -36,26 +37,7 @@ export default function Spot() {
     dispatch(loadReviews())
   }, [dispatch])
 
-  const handleReviewDelete = (e) => {
-    e.preventDefault();
-    dispatch(deleteReview(e.target.value))
-    dispatch(loadReviews())
-  }
-
-  const handleReviewEdit = (e) => {
-    e.preventDefault();
-    dispatch(editReview(e.target.value, sessionUser.id, id, description))
-    dispatch(loadReviews())
-  }
-
-
-  const allReviews = Object.values(reviews).map((el) => (
-    <div className='review'>
-      <div>{el?.description}</div>
-      {sessionUser?.id === el?.userId && <button onClick={handleReviewDelete} value={el?.id}>Delete Review</button>}
-      {sessionUser?.id === el?.userId && <button onClick={handleReviewEdit} value={el?.id}>Edit Review</button>}
-    </div>
-  ))
+  
 
   return (
     <div className='spot'>
@@ -72,7 +54,7 @@ export default function Spot() {
           <button>Submit Review</button>
         </form>}
       <div>
-        {allReviews}
+       <EditReview reviews={reviews} />
       </div>
     </div>
   )
