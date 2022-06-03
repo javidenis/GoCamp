@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Spot.associate = function(models) {
     Spot.belongsTo(models.User, { foreignKey: 'userId' })
-    Spot.hasMany(models.Review, { foreignKey: 'spotId' })
+    Spot.hasMany(models.Review, { 
+      foreignKey: 'spotId',
+      onDelete: 'CASCADE',
+      hooks: true
+   })
   };
   return Spot;
 };

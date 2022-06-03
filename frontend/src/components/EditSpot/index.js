@@ -24,8 +24,8 @@ export default function CreateEvent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        const spot = await dispatch(editSpot(name, city, state, image, price, description, sessionUser?.id, id))
-        await history.push(`/spots/${spot?.id}`)
+        const spot = dispatch(editSpot(name, city, state, image, price, description, sessionUser?.id, id))
+        history.push(`/spots/${spot?.id}`)
     }
 
 
