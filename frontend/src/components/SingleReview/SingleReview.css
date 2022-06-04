@@ -1,0 +1,22 @@
+.review-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.review {
+    border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+    width: 900px;
+}
+
+.review-username {
+    margin-bottom: 5px;
+}
+
+.review-description {
+    margin-bottom: 5px; 
+}

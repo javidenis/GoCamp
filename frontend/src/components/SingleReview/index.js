@@ -1,10 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addReview, deleteReview, editReview, loadReviews } from '../../store/reviews';
-import { useParams, useHistory } from 'react-router-dom';
+import { deleteReview, editReview, loadReviews } from '../../store/reviews';
+import { useHistory, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './SingleReview.css'
+import { getSpots } from '../../store/spots';
 
 export default function SingleReview({ review }) {
     const dispatch = useDispatch()
+    const history = useHistory()
     const sessionUser = useSelector(state => state.session.user);
     const [description, setDescription] = useState('');
     const [eReview, setEReview] = useState(false)
@@ -17,25 +20,29 @@ export default function SingleReview({ review }) {
         setEReview(false)
         dispatch(loadReviews())
     }
-    const handleReviewDelete = (e) => {
+    const handleReviewDelete = async (e) => {
         e.preventDefault();
-        dispatch(deleteReview(review.id))
-        dispatch(loadReviews())
+        await dispatch(deleteReview(review?.id))
+        await dispatch(loadReviews())
     }
     useEffect((errors = []) => {
         if (description.length < 1) errors.push("Description name is required");
         setErrors(errors);
     }, [description]);
+
     return (
-        <div className='review'>
-            <div>{review?.description}</div>
-            {sessionUser?.id === review?.userId && <button onClick={handleReviewDelete}>Delete Review</button>}
-            {sessionUser?.id === review?.userId && <button onClick={(e) => setEReview(!eReview)}>Edit Review</button>}
-            {eReview === true &&
-                <form onSubmit={handleReviewEdit}>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                    <button disabled={!!errors.length}>Submit Edit</button>
-                </form>}
+        <div className='review-container'>
+            <div className='review'>
+                <div className='review-username'>{sessionUser.username}</div>
+                <div className='review-description'>Review: {review?.description}</div>
+                {sessionUser?.id === review?.userId && <button onClick={handleReviewDelete}>Delete Review</button>}
+                {sessionUser?.id === review?.userId && <button onClick={(e) => setEReview(!eReview)}>Edit Review</button>}
+                {eReview === true &&
+                    <form onSubmit={handleReviewEdit}>
+                        <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                        <button disabled={!!errors.length}>Submit Edit</button>
+                    </form>}
+            </div>
         </div>
     )
 }

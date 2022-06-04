@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { removeSpot } from '../../store/spots';
-import { addReview, deleteReview, editReview, loadReviews } from '../../store/reviews';
+import { getSpots, removeSpot } from '../../store/spots';
+import { addReview, loadReviews } from '../../store/reviews';
 import { useState, useEffect } from 'react';
 import './spot.css'
 import EditReview from '../EditReview';
@@ -15,10 +15,14 @@ export default function Spot() {
   const reviews = useSelector(state => state.reviews)
   const sessionUser = useSelector(state => state.session.user);
   const [description, setDescription] = useState('');
+  const [errors, setErrors] = useState([]);
+  const spotReviews = Object.values(reviews).filter(review => review?.spotId === spot?.id)
+
 
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(removeSpot(id))
+    dispatch(getSpots())
     history.push('/')
   }
 
@@ -33,29 +37,40 @@ export default function Spot() {
     dispatch(loadReviews())
   }
 
-  useEffect(() => {
-    dispatch(loadReviews())
-  }, [dispatch])
 
-  
+  useEffect((errors = []) => {
+    if (description.length < 1) errors.push("Description name is required");
+    setErrors(errors);
+}, [description]);
 
   return (
     <div className='spot'>
-      <div key={spot?.name}>{spot?.name}</div>
-      {sessionUser?.id === spot?.userId && <button onClick={handleDelete}>Delete Event</button>}
-      {sessionUser?.id === spot?.userId && <button onClick={handleEdit}>Edit Event</button>}
-      <img className='spot-image' src={spot?.image} />
-      <div key={spot?.price}>${spot?.price}</div>
-      <div key={spot?.city}>{spot?.city}</div>
-      <div key={spot?.state}>{spot?.state}</div>
-      <div key={spot?.description}>{spot?.description}</div>
+      <div className='spot-title'>{spot?.name}</div>
+
+      <div className='image-container'>
+        <img className='spot-image' src={spot?.image} />
+      </div>
+      <div className='spot-btns'>
+        {sessionUser?.id === spot?.userId && <button onClick={handleDelete}>Delete Event</button>}
+        {sessionUser?.id === spot?.userId && <button onClick={handleEdit}>Edit Event</button>}
+      </div>
+      <div className='spot-description-container'>
+        <div className='spot-description'>
+          <div>${spot?.price}</div>
+          <div>{spot?.city}</div>
+          <div>{spot?.state}</div>
+          <div className='desc'>{spot?.description}</div>
+        </div>
+      </div>
       {sessionUser?.id !== undefined &&
-        <form onSubmit={handleSubmitReview}>
-          <textarea placeholder='Leave a Review' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-          <button>Submit Review</button>
-        </form>}
+        <div className='review-textarea-container'>
+          <form onSubmit={handleSubmitReview} className='review-textarea'>
+            <textarea placeholder='Leave a Review' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+            <button disabled={!!errors.length}>Submit Review</button>
+          </form>
+        </div>}
       <div>
-       <EditReview reviews={reviews} />
+        <EditReview reviews={spotReviews} />
       </div>
     </div>
   )

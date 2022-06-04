@@ -31,7 +31,6 @@ function LoginFormPage() {
       <ul className='errors-list'>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
-      <div></div>
       <div className="login-box">
         <h2>Login</h2>
         <div className="user-box">
@@ -43,13 +42,7 @@ function LoginFormPage() {
             onChange={(e) => setPassword(e.target.value)} />
           <label>Password</label>
         </div>
-        <button className='submit-btn' type="submit">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          Submit
-        </button>
+        <button className='submit-btn' type="submit"> Submit</button>
         <DemoUser id="demoUser" />
       </div>
     </form>

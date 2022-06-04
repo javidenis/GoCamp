@@ -25,7 +25,7 @@ export const getSpots = () => async (dispatch) => {
 const addSpot = (spot) => {
     return {
         type: ADD_SPOT,
-        payload: spot,
+        spot,
     };
 };
 
@@ -34,19 +34,19 @@ const edit = (spot) => ({
     spot
 });
 
-export const editSpot = (name, city, state, image, price, description, userId, id) => async dispatch => {
+export const editSpot = (data, id) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, city, state, image, price, description, userId, id })
+        body: JSON.stringify(data)
     });
 
     if (response.ok) {
         const info = await response.json();
-        await dispatch(edit(info));
-        await dispatch(getSpots())
+        dispatch(edit(info));
+        dispatch(getSpots())
         return info;
     }
 };
@@ -61,10 +61,10 @@ export const removeSpot = (id) => async (dispatch) => {
     dispatch(getSpots())
 }
 
-export const addSpots = (name, city, state, image, price, description, userId) => async (dispatch) => {
+export const addSpots = (data) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/new`, {
         method: 'POST',
-        body: JSON.stringify({ name, city, state, image, price, description, userId })
+        body: JSON.stringify(data)
     });
     const info = await response.json()
     await dispatch(addSpot(info))
@@ -79,21 +79,25 @@ const delSpot = (spot) => {
     };
 };
 
-const initialState = { spot: null };
+const initialState = { };
 
 const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_SPOTS:
-            newState = {  ...state };
+            newState = { ...state };
             action.spots.forEach((spot) => {
                 newState[spot.id] = spot;
             });
             return newState;
         case ADD_SPOT:
-            newState = Object.assign({}, state);
-            newState.spot = action.payload;
-            return newState;
+            if (!state[action.spot.id]) {
+                const newState = {
+                    ...state,
+                    [action.spot.id]: action.spot,
+                };
+                return newState;
+            }
         case REMOVE_SPOT:
             newState = Object.assign({}, state);
             newState.spot = null;

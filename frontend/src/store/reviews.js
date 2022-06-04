@@ -43,8 +43,8 @@ export const addReview = (userId, spotId, description) => async (dispatch) => {
     })
     if (response.ok) {
         const review = await response.json();
-        await dispatch(add(review))
-        await dispatch(loadReviews())
+        dispatch(add(review))
+        dispatch(loadReviews())
         return review
     }
 }
@@ -58,8 +58,8 @@ export const editReview = (reviewId, userId, spotId, description) => async (disp
 
     if (response.ok) {
         const review = await response.json();
-        await dispatch(edit(review));
-        await dispatch(loadReviews())
+        dispatch(edit(review));
+        dispatch(loadReviews())
         return review;
     }
 

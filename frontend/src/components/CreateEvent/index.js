@@ -12,29 +12,37 @@ export default function CreateEvent() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [image, setImage] = useState('');
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const sessionUser = useSelector(state => state.session.user);
-    const spots = useSelector(state => state.spots)
+    const userId = sessionUser.id
 
     useEffect((errors = []) => {
         if (city.length < 1) errors.push("City name is required");
         if (state.length < 1) errors.push("State name is required");
         if (image.length < 1) errors.push("Image name is required");
-        if (price.length < 1) errors.push("Price name is required");
+        if (!price) errors.push("Need to stay a price");
         if (description.length < 1) errors.push("Description name is required");
         setErrors(errors);
-    }, [name, city, state, image, price, description]);
+    }, [name, city, state, image, description]);
 
     if (sessionUser?.id == undefined) return (
         <Redirect to="/" />
     );
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        const spot = await dispatch(addSpots(name, city, state, image, price, description, sessionUser?.id))
+        const payload = {
+            name,
+            city,
+            state,
+            image,
+            price,
+            description,
+            userId
+        }
+        const spot = await dispatch(addSpots(payload))
         await history.push(`/spots/${spot.id}`)
     }
 
@@ -51,8 +59,8 @@ export default function CreateEvent() {
                     <input type="text" placeholder="Image Url" value={image} onChange={(e) => setImage(e.target.value)} />
                     <input type="text" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
                     <textarea className='description' placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                    <button className='submit-btn' 
-                    disabled={!!errors.length}
+                    <button className='submit-btn'
+                        disabled={!!errors.length}
                     >Send</button>
                 </div>
             </form >
