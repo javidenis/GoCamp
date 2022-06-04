@@ -14,6 +14,7 @@ import EditSpot from './components/EditSpot'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
     dispatch(spotsActions.getSpots())
@@ -33,13 +34,13 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/spots/:id">
+          <Route path="/spots/:id" exact >
             <Spot />
           </Route>
           <Route path="/new">
             <CreateEvent />
           </Route>
-          <Route exact path="/spots/:id/edit">
+          <Route path="/spots/:id/edit" exact>
             <EditSpot />
           </Route>
         </Switch>

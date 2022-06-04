@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { editSpot } from '../../store/spots';
 
-export default function CreateEvent() {
+export default function EditSpot() {
     const history = useHistory()
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
@@ -16,16 +16,22 @@ export default function CreateEvent() {
     const sessionUser = useSelector(state => state.session.user);
     const { id } = useParams()
 
+    useEffect((errors = []) => {
+        if (city.length < 1) errors.push("City name is required");
+        if (state.length < 1) errors.push("State name is required");
+        if (image.length < 1) errors.push("Image name is required");
+        if (price.length < 1) errors.push("Price name is required");
+        if (description.length < 1) errors.push("Description name is required");
+        setErrors(errors);
+    }, [name, city, state, image, price, description]);
+
     if (sessionUser?.id == undefined) return (
         <Redirect to="/" />
     );
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors([]);
         const spot = dispatch(editSpot(name, city, state, image, price, description, sessionUser?.id, id))
-        history.push(`/spots/${spot?.id}`)
+        history.push(`/spots/${spot.id}`)
     }
 
 
@@ -42,7 +48,9 @@ export default function CreateEvent() {
                     <input type="text" placeholder="Image Url" value={image} onChange={(e) => setImage(e.target.value)} />
                     <input type="text" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
                     <textarea className='description' placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                    <button className='submit-btn'>Send</button>
+                    <button className='submit-btn'
+                     disabled={!!errors.length}
+                     >Send</button>
                 </div>
             </form >
         </div >

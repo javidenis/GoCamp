@@ -12,14 +12,14 @@ export default function Spots() {
         dispatch(getSpots())
     }, [dispatch])
 
-    const allSpots = Object.values(spots).map((el) => (
+    const allSpots = Object.values(spots).map((el, i) => (
         <NavLink className='spot-navlink' to={`/spots/${el?.id}`}>
             <div className='home-spots' style={{ backgroundImage: `url(${el?.image})` }}>
-                <div className='display'>
-                    <div key={el?.name}>{el?.name}</div>
-                    <div key={el?.price}>${el?.price}</div>
-                    <div key={el?.city}>{el?.city}</div>
-                    <div key={el?.state}>{el?.state}</div>
+                <div key={i} className='display'>
+                    <div>{el?.name}</div>
+                    <div>${el?.price}</div>
+                    <div>{el?.city}</div>
+                    <div>{el?.state}</div>
                 </div>
             </div>
         </NavLink>

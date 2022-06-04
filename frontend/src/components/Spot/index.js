@@ -48,6 +48,7 @@ export default function Spot() {
       <div key={spot?.price}>${spot?.price}</div>
       <div key={spot?.city}>{spot?.city}</div>
       <div key={spot?.state}>{spot?.state}</div>
+      <div key={spot?.description}>{spot?.description}</div>
       {sessionUser?.id !== undefined &&
         <form onSubmit={handleSubmitReview}>
           <textarea placeholder='Leave a Review' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>

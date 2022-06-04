@@ -58,6 +58,7 @@ export const removeSpot = (id) => async (dispatch) => {
     );
     const info = await response.json()
     dispatch(delSpot(info))
+    dispatch(getSpots())
 }
 
 export const addSpots = (name, city, state, image, price, description, userId) => async (dispatch) => {
@@ -84,7 +85,7 @@ const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_SPOTS:
-            newState = {};
+            newState = {  ...state };
             action.spots.forEach((spot) => {
                 newState[spot.id] = spot;
             });

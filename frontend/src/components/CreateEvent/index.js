@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './CreateEvent.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -17,6 +17,15 @@ export default function CreateEvent() {
     const sessionUser = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots)
 
+    useEffect((errors = []) => {
+        if (city.length < 1) errors.push("City name is required");
+        if (state.length < 1) errors.push("State name is required");
+        if (image.length < 1) errors.push("Image name is required");
+        if (price.length < 1) errors.push("Price name is required");
+        if (description.length < 1) errors.push("Description name is required");
+        setErrors(errors);
+    }, [name, city, state, image, price, description]);
+
     if (sessionUser?.id == undefined) return (
         <Redirect to="/" />
     );
@@ -26,9 +35,8 @@ export default function CreateEvent() {
         e.preventDefault();
         setErrors([]);
         const spot = await dispatch(addSpots(name, city, state, image, price, description, sessionUser?.id))
-        await history.push(`/spots/${spot?.id}`)
+        await history.push(`/spots/${spot.id}`)
     }
-
 
     return (
         <div>
@@ -43,7 +51,9 @@ export default function CreateEvent() {
                     <input type="text" placeholder="Image Url" value={image} onChange={(e) => setImage(e.target.value)} />
                     <input type="text" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
                     <textarea className='description' placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                    <button className='submit-btn'>Send</button>
+                    <button className='submit-btn' 
+                    disabled={!!errors.length}
+                    >Send</button>
                 </div>
             </form >
         </div >

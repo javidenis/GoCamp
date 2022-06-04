@@ -17,7 +17,7 @@ router.post('/new', asyncHandler(async (req, res) => {
 
 router.put('/:id', asyncHandler(async (req, res) => {
     const { name, city, state, image, price, description, userId, id } = req.body
-    const spot = await db.Spot.findByPk(req.body.id);
+    const spot = await db.Spot.findByPk(id);
     await spot.update({ name, city, state, image, price, description, userId});
     return res.json(spot);
 }));

@@ -9,6 +9,7 @@ export default function SingleReview({ review }) {
     const [description, setDescription] = useState('');
     const [eReview, setEReview] = useState(false)
     const { spotId } = useParams()
+    const [errors, setErrors] = useState([]);
 
     const handleReviewEdit = (e) => {
         e.preventDefault();
@@ -21,7 +22,10 @@ export default function SingleReview({ review }) {
         dispatch(deleteReview(review.id))
         dispatch(loadReviews())
     }
-
+    useEffect((errors = []) => {
+        if (description.length < 1) errors.push("Description name is required");
+        setErrors(errors);
+    }, [description]);
     return (
         <div className='review'>
             <div>{review?.description}</div>
@@ -30,7 +34,7 @@ export default function SingleReview({ review }) {
             {eReview === true &&
                 <form onSubmit={handleReviewEdit}>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                    <button>Submit Edit</button>
+                    <button disabled={!!errors.length}>Submit Edit</button>
                 </form>}
         </div>
     )
