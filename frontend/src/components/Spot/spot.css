@@ -1,5 +1,68 @@
+.spot-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.spot-btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
 .spot-image {
     height: 700px;
     width: auto;
+    border-radius: 10px;
+    box-shadow: 10px 50px 200px rgba(0, 0, 0, 0.774);
 }
 
+.spot-description-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spot-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    text-align: center;
+}
+
+.desc {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.review-textarea-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-textarea {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+}
+
+.review-textarea > textarea {
+    resize: none;
+}

@@ -10,15 +10,14 @@ router.get("/", asyncHandler(async (req, res) => {
 }));
 
 router.post('/new', asyncHandler(async (req, res) => {
-    const { name, city, state, image, price, description, userId } = req.body
-    const spot = await db.Spot.create({ name, city, state, image, price, description, userId });
+    const spot = await db.Spot.create(req.body);
     return res.json(spot);
 }));
 
 router.put('/:id', asyncHandler(async (req, res) => {
-    const { name, city, state, image, price, description, userId, id } = req.body
+    const id = req.params['id']
     const spot = await db.Spot.findByPk(id);
-    await spot.update({ name, city, state, image, price, description, userId});
+    await spot.update(req.body);
     return res.json(spot);
 }));
 

@@ -1,19 +1,27 @@
+.father-of-navbar{
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+    height: 50px;
+    background-color: rgb(15,24,36);
+}
+
 .nav-bar {
     display: flex;
+    flex-direction: row;
+    height: 22px;
 }
 
 .spreader {
     margin-right: 15px;
-}
-
-.li-link {
-    display: flex;
+    border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+    background-color: rgb(15, 24, 36);
+    color: rgb(9, 233, 244);
+    text-decoration: none;
 }
 
 .home-link {
     display: inline;
-}
-
-.li-link > a {
-    margin-right: 15px;
 }
