@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../../db/models')
 const { asyncHandler, handleValidationErrors } = require('../../utils/validation');
 
+
 const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res) => {
@@ -11,6 +12,7 @@ router.get("/", asyncHandler(async (req, res) => {
 
 router.post('/new', asyncHandler(async (req, res) => {
     const spot = await db.Spot.create(req.body);
+    console.log(spot,'this is spot')
     return res.json(spot);
 }));
 
