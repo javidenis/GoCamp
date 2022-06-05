@@ -5,7 +5,7 @@ const { asyncHandler, handleValidationErrors } = require('../../utils/validation
 const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res) => {
-    const reviews = await db.Review.findAll();
+    let reviews = await db.Review.findAll();
     return res.json(reviews);
 }));
 
@@ -26,9 +26,7 @@ router.delete("/:id", asyncHandler(async (req, res) => {
     const review = await db.Review.findByPk(req.params.id)
     if (review) {
         await review.destroy()
-        res.json({ message: 'Review successfully deleted' })
-    } else {
-        res.json({ message: 'Failed to delete the review' })
+        res.json(req.params.id)
     }
 }))
 

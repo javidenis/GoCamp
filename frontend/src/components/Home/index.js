@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './home.css'
 import SpotCard from '../SpotCard'
+import { loadReviews } from '../../store/reviews'
 
 export default function Spots() {
+    const dispatch = useDispatch()
     const spots = useSelector(state => state.spots)
     const allSpots = Object.values(spots)
-    useEffect(() => {
-        console.log(allSpots, 'please work')
-    }, [])
+   
     return (
         <div>
             <div className='grid-container'>

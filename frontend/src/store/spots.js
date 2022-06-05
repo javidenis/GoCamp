@@ -61,15 +61,15 @@ export const removeSpot = (id) => async (dispatch) => {
     dispatch(getSpots())
 }
 
-export const addSpots = (data) => async (dispatch) => {
+export const addSpots = (payload) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/new`, {
         method: 'POST',
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
     });
-    const info = await response.json()
-    await dispatch(addSpot(info))
-    await dispatch(getSpots())
-    return info
+    const data = await response.json()
+    dispatch(addSpot(data))
+    dispatch(getSpots())
+    return data
 };
 
 const delSpot = (spot) => {
@@ -79,7 +79,7 @@ const delSpot = (spot) => {
     };
 };
 
-const initialState = { };
+const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
     let newState;
@@ -91,16 +91,14 @@ const spotsReducer = (state = initialState, action) => {
             });
             return newState;
         case ADD_SPOT:
-            if (!state[action.spot.id]) {
-                const newState = {
-                    ...state,
-                    [action.spot.id]: action.spot,
-                };
-                return newState;
-            }
+            newState = {
+                ...state,
+                [action.spot.id]: action.spot,
+            };
+            return newState;
         case REMOVE_SPOT:
-            newState = Object.assign({}, state);
-            newState.spot = null;
+            newState = { ...state };
+            delete newState[action.payload]
             return newState;
         case EDIT_SPOT:
             newState = { ...state };

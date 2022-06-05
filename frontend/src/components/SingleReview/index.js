@@ -1,14 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteReview, editReview, loadReviews } from '../../store/reviews';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './SingleReview.css'
-import { getSpots } from '../../store/spots';
 
 export default function SingleReview({ review }) {
     const dispatch = useDispatch()
-    const history = useHistory()
     const sessionUser = useSelector(state => state.session.user);
+  
     const [description, setDescription] = useState('');
     const [eReview, setEReview] = useState(false)
     const { spotId } = useParams()
@@ -46,3 +45,4 @@ export default function SingleReview({ review }) {
         </div>
     )
 }
+

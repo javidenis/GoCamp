@@ -19,10 +19,10 @@ export default function Spot() {
   const spotReviews = Object.values(reviews).filter(review => review?.spotId === spot?.id)
 
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
-    dispatch(removeSpot(id))
-    dispatch(getSpots())
+    await dispatch(removeSpot(id))
+    await dispatch(getSpots())
     history.push('/')
   }
 
@@ -36,12 +36,14 @@ export default function Spot() {
     dispatch(addReview(sessionUser.id, id, description))
     dispatch(loadReviews())
   }
-
+  useEffect(() => {
+    dispatch(loadReviews())
+  }, [dispatch])
 
   useEffect((errors = []) => {
     if (description.length < 1) errors.push("Description name is required");
     setErrors(errors);
-}, [description]);
+  }, [description]);
 
   return (
     <div className='spot'>
