@@ -8,9 +8,7 @@ export default function Spots() {
     const dispatch = useDispatch()
     const spots = useSelector(state => state.spots)
     const allSpots = Object.values(spots)
-    useEffect(() => {
-        dispatch(loadReviews())
-    }, [])
+   
     return (
         <div>
             <div className='grid-container'>
