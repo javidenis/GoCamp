@@ -66,10 +66,10 @@ export const addSpots = (data) => async (dispatch) => {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    const info = await response.json()
-    await dispatch(addSpot(info))
-    await dispatch(getSpots())
-    return info
+    const data = await response.json()
+    dispatch(addSpot(data))
+    dispatch(getSpots())
+    return data
 };
 
 const delSpot = (spot) => {
@@ -99,8 +99,8 @@ const spotsReducer = (state = initialState, action) => {
                 return newState;
             }
         case REMOVE_SPOT:
-            newState = Object.assign({}, state);
-            newState.spot = null;
+            newState = { ...state };
+            delete newState[action.spot]
             return newState;
         case EDIT_SPOT:
             newState = { ...state };

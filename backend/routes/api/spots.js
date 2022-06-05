@@ -25,10 +25,8 @@ router.delete("/:id", asyncHandler(async (req, res) => {
     const spot = await db.Spot.findByPk(req.params.id)
     if (spot) {
         await spot.destroy()
-        res.json({ message: 'Spot successfully deleted' })
-    } else {
-        res.json({ message: 'Failed to delete the spot' })
-    }
+        res.json(req.params.id)
+    } 
 }))
 
 module.exports = router;
