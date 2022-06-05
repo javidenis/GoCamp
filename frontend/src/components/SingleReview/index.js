@@ -32,7 +32,7 @@ export default function SingleReview({ review }) {
     return (
         <div className='review-container'>
             <div className='review'>
-                <div className='review-username'>{sessionUser.username}</div>
+                <div className='review-username'>Review from one of our Awesome Users</div>
                 <div className='review-description'>Review: {review?.description}</div>
                 {sessionUser?.id === review?.userId && <button onClick={handleReviewDelete}>Delete Review</button>}
                 {sessionUser?.id === review?.userId && <button onClick={(e) => setEReview(!eReview)}>Edit Review</button>}
@@ -45,4 +45,6 @@ export default function SingleReview({ review }) {
         </div>
     )
 }
+
+// {<div className='review-username'>{sessionUser.username}</div>}
 
