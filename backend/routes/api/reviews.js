@@ -5,7 +5,7 @@ const { asyncHandler, handleValidationErrors } = require('../../utils/validation
 const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res) => {
-    const reviews = await db.Review.findAll();
+    let reviews = await db.Review.findAll();
     return res.json(reviews);
 }));
 

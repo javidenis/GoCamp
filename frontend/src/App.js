@@ -10,14 +10,16 @@ import * as spotsActions from "./store/spots";
 import Home from './components/Home'
 import CreateEvent from './components/CreateEvent'
 import EditSpot from './components/EditSpot'
+import { loadReviews } from './store/reviews'
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
     dispatch(spotsActions.getSpots())
+    dispatch(loadReviews())
   }, [dispatch]);
 
   return (
