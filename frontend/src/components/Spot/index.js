@@ -19,10 +19,10 @@ export default function Spot() {
   const spotReviews = Object.values(reviews).filter(review => review?.spotId === spot?.id)
 
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
-    dispatch(removeSpot(id))
-    dispatch(getSpots())
+    await dispatch(removeSpot(id))
+    await dispatch(getSpots())
     history.push('/')
   }
 
