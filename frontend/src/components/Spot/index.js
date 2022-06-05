@@ -36,12 +36,14 @@ export default function Spot() {
     dispatch(addReview(sessionUser.id, id, description))
     dispatch(loadReviews())
   }
-
+  useEffect(() => {
+    dispatch(loadReviews())
+  }, [dispatch])
 
   useEffect((errors = []) => {
     if (description.length < 1) errors.push("Description name is required");
     setErrors(errors);
-}, [description]);
+  }, [description]);
 
   return (
     <div className='spot'>
