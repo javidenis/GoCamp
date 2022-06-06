@@ -22,3 +22,8 @@
 - Logged in users can host spots for camping.
 - Logged in users can edit and delete their own spots.
 - All users can view all the spots being hosted.
+
+## 4. Reviews
+* Logged in users can post reviews on spots.
+* Logged in users can edit and delete their own reviews.
+* All users can view reviews on spots.
