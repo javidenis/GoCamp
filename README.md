@@ -7,6 +7,8 @@
 - Spots
 - Reviews
 
+(more in progress)
+
 ## 1. New account creation, log in, log out (Authentication)
 - Users can sign up, log in, and log out.
 - Users can use a demo log in to try the site.
