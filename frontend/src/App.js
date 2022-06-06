@@ -45,6 +45,9 @@ function App() {
           <Route path="/spots/:id/edit" exact>
             <EditSpot />
           </Route>
+          <Route path="*">
+            <h2 className="page-not-found">Sorry, page was not found 404</h2>
+          </Route>
         </Switch>
       )}
     </>

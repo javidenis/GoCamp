@@ -46,5 +46,4 @@ export default function SingleReview({ review }) {
     )
 }
 
-// {<div className='review-username'>{sessionUser.username}</div>}
 
